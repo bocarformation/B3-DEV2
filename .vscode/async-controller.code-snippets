@@ -1,0 +1,21 @@
+{
+
+"Function Template with Dynamic Name": {
+  "prefix": "async-controller",
+  "body": [
+    "export const ${1:functionName} = async (",
+    "    req: Request,",
+    "    res: Response,",
+    "    next: NextFunction",
+    ") : Promise<any> => {",
+    "    try {",
+    "        $0",
+    "    } catch (error) {",
+    "        next(error);",
+    "    }",
+    "};"
+  ],
+  "description": "Express async handler with try/catch"
+}
+
+}

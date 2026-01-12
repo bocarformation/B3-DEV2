@@ -5,10 +5,26 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id                String      @id @default(uuid())     
+  name              String
+  ownerName         String
+  foodTypes         String[]
+  postalcode        String
+  address           String
+  phone             String
+  email             String
+  password          String
+  salt              String      
+  serviceAvailable  Boolean     @default(false)
+  coverImages       String[]    @default([])
+  rating            Float       @default(0.0)
+  createdAt         DateTime    @default(now())
 }
