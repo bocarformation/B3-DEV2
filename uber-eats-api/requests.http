@@ -1,3 +1,5 @@
+@restaurantId=a1eb96d8-3cd5-4b20-908c-b4ce6853eac4
+
 ### Register Restaurant
 POST http://localhost:8000/admin/restaurants
 Content-Type: application/json
@@ -12,3 +14,9 @@ Content-Type: application/json
     "email": "jean-pierre@gmail.com",
     "password": "123456"
 }
+
+### Get Restaurants
+GET http://localhost:8000/admin/restaurants
+
+### Get Restaurant By ID
+GET http://localhost:8000/admin/restaurants/{{restaurantId}}

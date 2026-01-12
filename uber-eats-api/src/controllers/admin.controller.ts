@@ -37,7 +37,13 @@ export const getRestaurants = async (
     next: NextFunction
 ) : Promise<any> => {
     try {
-        
+        const restaurants =  await prisma.restaurant.findMany();
+
+        if(!restaurants){
+            return res.status(404).json({message: "No restaurant found"})
+        }
+
+        res.status(200).json(restaurants.map(sanitizeRestaurant));
     } catch (error) {
         next(error);
     }
@@ -49,7 +55,15 @@ export const getRestaurantById = async (
     next: NextFunction
 ) : Promise<any> => {
     try {
+        const {id} = req.params;
+        const restaurant = await prisma.restaurant.findUnique({
+            where: {id: id}
+        });
         
+        if(!restaurant){
+            return res.status(404).json({message: "Restaurant not found" });
+        }
+        res.status(200).json(sanitizeRestaurant(restaurant));
     } catch (error) {
         next(error);
     }
