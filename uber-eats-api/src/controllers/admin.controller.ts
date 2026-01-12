@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import type { CreateRestaurantInputs } from "../dto/index";
 import { prisma } from "../prisma/client";
+import { generateSalt, hashPassword } from "../utility/index";
+import { sanitizeRestaurant } from "../utility/index";
 
 export const registerRestaurant = async (
     req: Request,
@@ -16,10 +18,14 @@ export const registerRestaurant = async (
         if(existingRestaurant){
             return res.status(400).json({message: `Email ${body.email} already exist`});
         }
+
+        const salt = await generateSalt();
+        const hashedPassword = await hashPassword(body.password, salt);
+
         const restaurant = await prisma.restaurant.create({
-            data:  {...body, salt: "eghrjk"}
+            data:  {...body, salt: salt, password: hashedPassword}
         })
-        res.status(201).json(restaurant);
+        res.status(201).json(sanitizeRestaurant(restaurant));
     } catch (error) {
         next(error);
     }
