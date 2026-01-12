@@ -16,7 +16,7 @@ declare module "express-serve-static-core" {
     }
 }
 
-export function JsonApiResponseMiddleware(
+export function jsonApiResponseMiddleware(
     req: Request,
     res: Response,
     next: NextFunction

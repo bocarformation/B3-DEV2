@@ -16,7 +16,8 @@ export const registerRestaurant = async (
         });
 
         if(existingRestaurant){
-            return res.status(400).json({message: `Email ${body.email} already exist`});
+            return res.jsonError(`Email ${body.email} already exist`, 400)
+            // return res.status(400).json({message: `Email ${body.email} already exist`});
         }
 
         const salt = await generateSalt();
@@ -25,7 +26,8 @@ export const registerRestaurant = async (
         const restaurant = await prisma.restaurant.create({
             data:  {...body, salt: salt, password: hashedPassword}
         })
-        res.status(201).json(sanitizeRestaurant(restaurant));
+        // res.status(201).json(sanitizeRestaurant(restaurant)); // avant formatage
+        res.jsonSuccess(sanitizeRestaurant(restaurant), 201)
     } catch (error) {
         next(error);
     }
@@ -40,10 +42,12 @@ export const getRestaurants = async (
         const restaurants =  await prisma.restaurant.findMany();
 
         if(!restaurants){
-            return res.status(404).json({message: "No restaurant found"})
+            return res.jsonError("No restaurant found", 404)
+            // return res.status(404).json({message: "No restaurant found"})
         }
 
-        res.status(200).json(restaurants.map(sanitizeRestaurant));
+        // res.status(200).json(restaurants.map(sanitizeRestaurant));
+        res.jsonSuccess(restaurants.map(sanitizeRestaurant)); // par défaut 200
     } catch (error) {
         next(error);
     }
@@ -61,9 +65,11 @@ export const getRestaurantById = async (
         });
         
         if(!restaurant){
-            return res.status(404).json({message: "Restaurant not found" });
+            return res.jsonError("No restaurant found", 404)
+            // return res.status(404).json({message: "Restaurant not found" });
         }
-        res.status(200).json(sanitizeRestaurant(restaurant));
+        res.jsonSuccess(sanitizeRestaurant(restaurant)); // Par défaut 200
+        // res.status(200).json(sanitizeRestaurant(restaurant));
     } catch (error) {
         next(error);
     }

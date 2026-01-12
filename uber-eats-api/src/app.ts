@@ -1,10 +1,12 @@
 import express from "express";
 import {AdminRoute} from "./routes/index";
+import { jsonApiResponseMiddleware } from "./middlewares/index";
 
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}));
+app.use(jsonApiResponseMiddleware);
 
 
 app.use("/admin", AdminRoute)
