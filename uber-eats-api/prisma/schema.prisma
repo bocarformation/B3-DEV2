@@ -20,7 +20,7 @@ model Restaurant {
   postalcode        String
   address           String
   phone             String
-  email             String
+  email             String      @unique
   password          String
   salt              String      
   serviceAvailable  Boolean     @default(false)

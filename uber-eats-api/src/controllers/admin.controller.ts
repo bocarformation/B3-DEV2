@@ -9,6 +9,13 @@ export const registerRestaurant = async (
 ) : Promise<any> => {
     try {
         const body = req.body as CreateRestaurantInputs;
+        const existingRestaurant = await prisma.restaurant.findUnique({
+            where : {email: body.email}
+        });
+
+        if(existingRestaurant){
+            return res.status(400).json({message: `Email ${body.email} already exist`});
+        }
         const restaurant = await prisma.restaurant.create({
             data:  {...body, salt: "eghrjk"}
         })
