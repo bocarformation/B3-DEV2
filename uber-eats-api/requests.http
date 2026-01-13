@@ -70,5 +70,5 @@ Content-Type: image/jpeg
 Content-Disposition: form-data; name="images"; filename="restaurant_2.jpg"
 Content-Type: image/jpeg
 
-< ./images/tests/restaurant_12.jpg
+< ./images/tests/restaurant_2.jpg
 --limite--
