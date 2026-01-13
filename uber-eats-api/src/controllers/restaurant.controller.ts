@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import type { LoginInputs } from "../dto/index";
 import { prisma } from "../prisma/client";
 import { isValidPassword, generateSignature } from "../utility/index";
+import { sanitizeRestaurant } from "../utility/index";
 
 
 export const login = async (
@@ -40,6 +41,30 @@ export const login = async (
 
         res.jsonSuccess(token)
 
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getProfile = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<any> => {
+    try {
+
+        if(!req.user.id){
+            return res.jsonError("Acces unauthorized", 403)
+        }
+        const restaurant = await prisma.restaurant.findUnique({
+            where: {id: req.user.id}
+        })
+
+        if(!restaurant){
+            return res.jsonError("Restaurant not found", 404)
+        }
+        
+        res.jsonSuccess(sanitizeRestaurant(restaurant))
     } catch (error) {
         next(error);
     }

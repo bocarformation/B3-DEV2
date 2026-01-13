@@ -31,3 +31,9 @@ Content-Type: application/json
 }
 
 
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ4MmIyNTIyLWIwMTYtNDhkNS1iZWE4LThkMWQ3ZGY2ODkzNSIsIm5hbWUiOiJMZSBQZXRpdCBCaXN0cm8iLCJvd25lck5hbWUiOiJJc2FiZWxsZSBEdXBvbnQiLCJlbWFpbCI6ImxlcGV0aXRiaXN0cm9AZ21haWwuY29tIiwiZm9vZFR5cGVzIjpbIkZyZW5jaCIsIlNlYWZvb2QiXSwiaWF0IjoxNzY4MzA1MjkzLCJleHAiOjE3NjgzOTE2OTN9.CMDzgWNflODwuc5CCj6qmSvkdzJR0eAiXoaZNTuvSPc
+
+### Get Profile
+GET http://localhost:8000/restaurant/profile
+Authorization: Bearer {{token}}
+
