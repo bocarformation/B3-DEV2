@@ -8,3 +8,16 @@ export interface CreateRestaurantInputs {
     email: string, 
     password: string
 }
+
+export interface LoginInputs{
+    email: string,
+    password: string
+}
+
+export interface RestaurantPayload {
+    id: string,
+    name: string,
+    ownerName: string,
+    email: string,
+    foodTypes: string[]
+}

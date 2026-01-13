@@ -21,6 +21,13 @@ GET http://localhost:8000/admin/restaurants
 ### Get Restaurant By ID
 GET http://localhost:8000/admin/restaurants/{{restaurantId}}
 
+### Login
+POST http://localhost:8000/restaurant/login
+Content-Type: application/json
 
+{
+    "email": "lepetitbistro@gmail.com",
+    "password": "qwerty"
+}
 
 
