@@ -1,9 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
-import type { LoginInputs,EditRestaurantInputs } from "../dto/index";
+import type { LoginInputs,EditRestaurantInputs, CreateFoodInputs } from "../dto/index";
 import { prisma } from "../prisma/client";
 import { isValidPassword, generateSignature } from "../utility/index";
 import { sanitizeRestaurant } from "../utility/index";
 import { uploadImagesMiddleware } from "../middlewares/index";
+
 
 export const login = async (
     req: Request,
@@ -152,6 +153,37 @@ export const updateCoverImages = [uploadImagesMiddleware,
         });
 
         res.jsonSuccess(sanitizeRestaurant(updatedRestaurant))
+    } catch (error) {
+        next(error);
+    }
+}];
+
+export const addFood = [uploadImagesMiddleware, async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<any> => {
+    try {
+        const {id} = req.user;
+
+        const body = JSON.parse(req.body.data) as CreateFoodInputs;
+
+        const restaurant = await prisma.restaurant.findUnique({
+            where: {id}
+        })
+
+        if(!restaurant){
+            return res.jsonError("Restaurant not found", 404)
+        }
+
+        const files = req.files as Express.Multer.File[];
+        const images = files.map(file => file.filename);
+
+        const food = await prisma.food.create({
+            data: {...body, images, restaurantId: id}
+        });
+
+        res.jsonSuccess(food, 201)
     } catch (error) {
         next(error);
     }

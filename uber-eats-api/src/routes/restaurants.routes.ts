@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { login,getProfile, updateProfile, updateServiceAvailability, updateCoverImages } from "../controllers/index";
+import { login,getProfile, updateProfile, updateServiceAvailability, updateCoverImages, addFood} from "../controllers/index";
 import { authenticationMiddleware } from "../middlewares/index";
+
 
 
 
@@ -12,7 +13,8 @@ router.post("/login", login)
 router.get("/profile", authenticationMiddleware, getProfile); // route protégée
 router.patch("/profile", authenticationMiddleware, updateProfile); // route protégée
 router.patch("/profile/service-available", authenticationMiddleware, updateServiceAvailability); // route protégée
-router.patch("/profile/cover-images",authenticationMiddleware,updateCoverImages )
+router.patch("/profile/cover-images",authenticationMiddleware,updateCoverImages );
+router.post("/foods", authenticationMiddleware, addFood)
 
 export {router as RestaurantRoute};
 

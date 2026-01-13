@@ -1,4 +1,4 @@
-@restaurantId=a1eb96d8-3cd5-4b20-908c-b4ce6853eac4
+@restaurantId=1fc152e7-b657-4ea6-b7e1-2a6f5282f756
 
 ### Register Restaurant
 POST http://localhost:8000/admin/restaurants
@@ -31,8 +31,7 @@ Content-Type: application/json
 }
 
 
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ4MmIyNTIyLWIwMTYtNDhkNS1iZWE4LThkMWQ3ZGY2ODkzNSIsIm5hbWUiOiJMZSBQZXRpdCBCaXN0cm8iLCJvd25lck5hbWUiOiJJc2FiZWxsZSBEdXBvbnQiLCJlbWFpbCI6ImxlcGV0aXRiaXN0cm9AZ21haWwuY29tIiwiZm9vZFR5cGVzIjpbIkZyZW5jaCIsIlNlYWZvb2QiXSwiaWF0IjoxNzY4MzA1MjkzLCJleHAiOjE3NjgzOTE2OTN9.CMDzgWNflODwuc5CCj6qmSvkdzJR0eAiXoaZNTuvSPc
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmYzE1MmU3LWI2NTctNGVhNi1iN2UxLTJhNmY1MjgyZjc1NiIsIm5hbWUiOiJMZSBQZXRpdCBCaXN0cm8iLCJvd25lck5hbWUiOiJJc2FiZWxsZSBEdXBvbnQiLCJlbWFpbCI6ImxlcGV0aXRiaXN0cm9AZ21haWwuY29tIiwiZm9vZFR5cGVzIjpbIkZyZW5jaCIsIlNlYWZvb2QiXSwiaWF0IjoxNzY4MzIxMTY2LCJleHAiOjE3Njg0MDc1NjZ9.0QrLMJQkuqAoBeAfehx674u_AYCyt6FRE2yKSa2SkNI
 ### Get Profile
 GET http://localhost:8000/restaurant/profile
 Authorization: Bearer {{token}}
@@ -71,4 +70,30 @@ Content-Disposition: form-data; name="images"; filename="restaurant_2.jpg"
 Content-Type: image/jpeg
 
 < ./images/tests/restaurant_2.jpg
+--limite--
+
+
+### Add Food
+POST http://localhost:8000/restaurant/foods
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=limite
+
+--limite
+Content-Dispostion: form-data; name="data"
+Content-Type: application/json
+
+{
+    "name": "Pates",
+    "description": "Des pates à la crème",
+    "category": "pates",
+    "foodType": "pates",
+    "readyTime": 15,
+    "price": 15.90
+}
+
+--limite
+Content-Disposition: form-data; name="images"; filename="pates.jpg"
+Content-Type: image/jpeg
+
+< ./images/tests/pates.jpg
 --limite--
