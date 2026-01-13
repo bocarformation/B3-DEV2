@@ -53,3 +53,22 @@ Content-Type: application/json
 ### Update Service availability
 PATCH http://localhost:8000/restaurant/profile/service-available
 Authorization: Bearer {{token}}
+
+
+### Update Cover Images
+PATCH http://localhost:8000/restaurant/profile/cover-images
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=limite
+
+--limite
+Content-Disposition: form-data; name="images"; filename="restaurant_1.jpg"
+Content-Type: image/jpeg
+
+< ./images/tests/restaurant_1.jpg
+
+--limite
+Content-Disposition: form-data; name="images"; filename="restaurant_2.jpg"
+Content-Type: image/jpeg
+
+< ./images/tests/restaurant_12.jpg
+--limite--

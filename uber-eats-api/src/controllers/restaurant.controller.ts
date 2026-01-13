@@ -3,8 +3,7 @@ import type { LoginInputs,EditRestaurantInputs } from "../dto/index";
 import { prisma } from "../prisma/client";
 import { isValidPassword, generateSignature } from "../utility/index";
 import { sanitizeRestaurant } from "../utility/index";
-
-
+import { uploadImagesMiddleware } from "../middlewares/index";
 
 export const login = async (
     req: Request,
@@ -124,3 +123,36 @@ export const updateServiceAvailability = async (
         next(error);
     }
 };
+
+export const updateCoverImages = [uploadImagesMiddleware,
+    async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<any> => {
+    try {
+        const {id} = req.user;
+
+        const restaurant = await prisma.restaurant.findUnique({
+            where: {id}
+        });
+
+        if(!restaurant){
+            return res.jsonError("Restaurant not found", 404);
+        }
+
+        const files = req.files as Express.Multer.File[];
+        const images = files.map(file => file.filename);
+
+        restaurant.coverImages.push(...images);
+
+        const updatedRestaurant = await prisma.restaurant.update({
+            where: {id},
+            data: {coverImages: restaurant.coverImages}
+        });
+
+        res.jsonSuccess(sanitizeRestaurant(updatedRestaurant))
+    } catch (error) {
+        next(error);
+    }
+}];
