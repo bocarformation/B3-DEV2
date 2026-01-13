@@ -49,3 +49,7 @@ Content-Type: application/json
     "address": "10 Rue de la Roquette",
     "phone": "01 45 67 89 10"
 }
+
+### Update Service availability
+PATCH http://localhost:8000/restaurant/profile/service-available
+Authorization: Bearer {{token}}

@@ -12,6 +12,8 @@ declare module "express-serve-static-core" {
 
 export const authenticationMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
+
+
         const authorization = req.headers.authorization;
         if(!authorization) {
             return res.jsonError("Missing authorization header", 403);
@@ -29,3 +31,4 @@ export const authenticationMiddleware = async (req: Request, res: Response, next
         next(error);
     }
 }
+

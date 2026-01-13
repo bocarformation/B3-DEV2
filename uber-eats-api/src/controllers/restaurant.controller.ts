@@ -95,3 +95,32 @@ export const updateProfile = async (
         next(error);
     }
 };
+
+
+export const updateServiceAvailability = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<any> => {
+    try {
+        const {id} = req.user;
+
+        const restaurant = await prisma.restaurant.findUnique({
+            where: {id}
+        });
+
+        if(!restaurant){
+            return res.jsonError("Restaurant not found", 404);
+        }
+
+        const updatedRestaurant = await prisma.restaurant.update({
+            where: {id},
+            data: { serviceAvailable: !restaurant.serviceAvailable } // toggle
+        });
+
+        res.jsonSuccess(sanitizeRestaurant(updatedRestaurant))
+        
+    } catch (error) {
+        next(error);
+    }
+};
