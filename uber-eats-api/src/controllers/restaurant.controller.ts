@@ -166,8 +166,9 @@ export const addFood = [uploadImagesMiddleware, async (
     try {
         const {id} = req.user;
 
-        const body = JSON.parse(req.body.data) as CreateFoodInputs;
-
+        const body = req.body as CreateFoodInputs;
+        console.log(body);
+        
         const restaurant = await prisma.restaurant.findUnique({
             where: {id}
         })
@@ -179,8 +180,10 @@ export const addFood = [uploadImagesMiddleware, async (
         const files = req.files as Express.Multer.File[];
         const images = files.map(file => file.filename);
 
+        const readyTime = Number(body.readyTime);
+        const price = Number(body.price);
         const food = await prisma.food.create({
-            data: {...body, images, restaurantId: id}
+            data: {...body, readyTime, price, images, restaurantId: id}
         });
 
         res.jsonSuccess(food, 201)
