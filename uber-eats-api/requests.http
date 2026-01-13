@@ -37,3 +37,15 @@ Content-Type: application/json
 GET http://localhost:8000/restaurant/profile
 Authorization: Bearer {{token}}
 
+### Update profile
+PATCH http://localhost:8000/restaurant/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Le Petit Bistro",
+    "ownerName": "Damien",
+    "foodTypes": ["French", "Seafood", "Italian"],
+    "address": "10 Rue de la Roquette",
+    "phone": "01 45 67 89 10"
+}

@@ -21,3 +21,11 @@ export interface RestaurantPayload {
     email: string,
     foodTypes: string[]
 }
+
+export interface EditRestaurantInputs {
+    name: string, 
+    ownerName: string,
+    foodTypes: [string],
+    address: string,
+    phone: string
+}

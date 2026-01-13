@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import type { LoginInputs } from "../dto/index";
+import type { LoginInputs,EditRestaurantInputs } from "../dto/index";
 import { prisma } from "../prisma/client";
 import { isValidPassword, generateSignature } from "../utility/index";
 import { sanitizeRestaurant } from "../utility/index";
+
 
 
 export const login = async (
@@ -64,6 +65,31 @@ export const getProfile = async (
             return res.jsonError("Restaurant not found", 404)
         }
         
+        res.jsonSuccess(sanitizeRestaurant(restaurant))
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+export const updateProfile = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<any> => {
+    try {
+        const {id} = req.user;
+        const {name, ownerName, foodTypes, address, phone} = req.body as EditRestaurantInputs;
+
+        const restaurant = await prisma.restaurant.update({
+            where: {id},
+            data: {name, ownerName, foodTypes, address, phone}
+        });
+
+        if(!restaurant){
+            return res.jsonError("Restaurant not found", 404);
+        }
+
         res.jsonSuccess(sanitizeRestaurant(restaurant))
     } catch (error) {
         next(error);
