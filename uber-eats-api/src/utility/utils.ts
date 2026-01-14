@@ -10,15 +10,23 @@ export const getEnvVariable = (variableName: string) => {
     return value;
 }
 
-export const extractToken = (authorization: any ): string | null => {
-    const [prefix, token] = authorization.split(" ");
-    // Bearer ey59885651 (prefix = Bearer; token = ey59885651)
-    const authorizationPrefixes = ["Bearer"]; 
+export const extractToken = (authorization: string): string | null => {
 
-    if(!authorizationPrefixes.includes(prefix)){
+    if (!authorization) {
+        return null;
+    }
+
+    const [prefix, token] = authorization.split(" ");
+
+    if (!prefix || !token) {
+        return null;
+    }
+
+    const authorizationPrefixes = ["Bearer"];
+
+    if (!authorizationPrefixes.includes(prefix)) {
         return null;
     }
 
     return token;
-
-}
+};
