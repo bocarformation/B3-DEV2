@@ -6,7 +6,8 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerOptions from "../docs/swagger.config";
 
 const app = express();
-const swaggerSpec = swaggerJSDoc(swaggerOptions)
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true})); // x-www-form-urlencoded
 app.use(jsonApiResponseMiddleware);
