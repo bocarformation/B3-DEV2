@@ -1,0 +1,223 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "UberEats API",
+    "version": "1.0.0",
+    "description": "Documentation de l'API UberEats"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1",
+      "description": "Version 1"
+    },
+    {
+      "url": "http://localhost:8000/api/v2",
+      "description": "Version 2"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "CreateRestaurantInputs": {
+        "type": "object",
+        "required": [
+          "name",
+          "ownerName",
+          "foodTypes",
+          "postalcode",
+          "address",
+          "phone",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "La Boucherie"
+          },
+          "ownerName": {
+            "type": "string",
+            "example": "Jean-Pierre"
+          },
+          "foodTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "Pizza",
+              "Burger",
+              "French"
+            ]
+          },
+          "postalcode": {
+            "type": "string",
+            "example": "75001"
+          },
+          "address": {
+            "type": "string",
+            "example": "Rue de la Paix"
+          },
+          "phone": {
+            "type": "string",
+            "example": "0612345678"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jean-pierre@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "123456"
+          }
+        }
+      },
+      "RestaurantProfileResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "62f9fcfc-cc05-4994-9d98-3a562de59c29"
+              },
+              "name": {
+                "type": "string",
+                "example": "Le Petit Bistro"
+              },
+              "ownerName": {
+                "type": "string",
+                "example": "Jean Dupont"
+              },
+              "foodTypes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "French",
+                  "Seafood",
+                  "Italian"
+                ]
+              },
+              "postalcode": {
+                "type": "string",
+                "example": "75001"
+              },
+              "address": {
+                "type": "string",
+                "example": "10 Rue de la Roquette"
+              },
+              "phone": {
+                "type": "string",
+                "example": "01 45 67 89 10"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "lepetitbistro@gmail.com"
+              },
+              "serviceAvailable": {
+                "type": "boolean",
+                "example": true
+              },
+              "coverImages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "28abe751-7230-4647-b2aa-b33d81a2526e_restaurant_1.jpg",
+                  "41908e35-53e8-42e8-9173-83710ce7089d_restaurant_1.jpg"
+                ]
+              },
+              "rating": {
+                "type": "number",
+                "example": 0
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-04-23T11:56:57.065Z"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/restaurant/profile": {
+      "get": {
+        "summary": "Récupérer le profil du restaurant connecté",
+        "tags": [
+          "Restaurants"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informations du restaurant récupérées avec succès",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestaurantProfileResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Token manquant ou invalide"
+          }
+        }
+      }
+    },
+    "/admin/restaurants": {
+      "post": {
+        "summary": "Enregistrer un nouveau restaurant",
+        "description": "Permet à un administrateur d’ajouter un restaurant à la base de données.",
+        "tags": [
+          "Restaurants"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRestaurantInputs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Restaurant créé avec succès"
+          },
+          "400": {
+            "description": "Données de requête invalides"
+          },
+          "409": {
+            "description": "Un restaurant avec cet email ou nom existe déjà"
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}

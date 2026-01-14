@@ -1,7 +1,7 @@
 const swaggerOptions = {
     definition: {
         openapi: "3.0.0",
-        info:{
+        info: {
             title: "UberEats API",
             version: "1.0.0",
             description: "Documentation de l'API UberEats"
@@ -9,17 +9,26 @@ const swaggerOptions = {
         servers: [
             {
                 url: "http://localhost:8000/api/v1",
-                description: "Serveur de développement"
+                description: "Version 1"
+            },
+            {
+                url: "http://localhost:8000/api/v2",
+                description: "Version 2"
             }
-        ]
+        ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT"
+                }
+            }
+        }
     },
     apis: [
-        "./src/routes/v1/index.ts",
-        "./src/routes/v1/admin.routes.ts",
-        "./src/routes/v1/restaurant.routes.ts",
-        "./src/routes/v1/shopping.routes.ts",
-        "./src/dto/restaurant.dto.ts",
-        "./src/dto/food.dto.ts"
+        "./src/docs/**/*.ts",
+
 
     ]
 }

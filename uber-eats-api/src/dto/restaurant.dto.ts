@@ -1,3 +1,4 @@
+
 export interface CreateRestaurantInputs {
     name: string,
     ownerName: string,
