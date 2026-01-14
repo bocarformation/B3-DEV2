@@ -97,3 +97,16 @@ Content-Type: image/jpeg
 
 < ./images/tests/pates.jpg
 --limite--
+
+
+### Get Foods
+GET http://localhost:8000/api/v1/shopping/available-foods/75010
+
+### Shopping: Get Top restaurants
+GET http://localhost:8000/api/v1/shopping/top-restaurants/75010
+
+### Shopping: Get foods in 30 mins
+GET http://localhost:8000/api/v1/shopping/foods-in-mins/75001
+
+### Shopping: Search foods
+GET http://localhost:8000/api/v1/shopping/search-foods/75010?search=burger

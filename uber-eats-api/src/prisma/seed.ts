@@ -3,6 +3,7 @@ import "dotenv/config";
 import {Pool} from "pg";
 import { PrismaPg } from "@prisma/adapter-pg"
 import { generateSalt, hashPassword} from "../utility/index";
+import { v4 as uuidv4 } from "uuid";
 
 
 const pool = new Pool({
@@ -85,28 +86,75 @@ const restaurants = [{
     password: "qwerty"
   }]
 
-  async function main(){
-    for(const restaurant of restaurants) {
-        const salt = await generateSalt();
-        const hashedPassword = await hashPassword(restaurant.password, salt);
+async function main() {
+        for (let i = 0; i < restaurants.length; i++) {
+            const restaurant = restaurants[i]
+            const salt = await generateSalt()
+            const hashedPassword = await hashPassword(restaurant.password, salt)
+            const id = uuidv4()
+            const serviceAvailable = i % 2 === 0 // un sur deux
+            const rating = parseFloat((Math.random() * 10).toFixed(2)) // de 0 à 10
 
-        await prisma.restaurant.create({
-            data: {
-                ...restaurant,
-                password: hashedPassword,
-                salt: salt
-            }
-        });
-        console.log(`Restaurant ${restaurant.name} ajouté`);
-        
+            await prisma.restaurant.create({
+                data: {
+                    id,
+                    name: restaurant.name,
+                    ownerName: restaurant.ownerName,
+                    foodTypes: restaurant.foodTypes,
+                    postalcode: restaurant.postalcode,
+                    address: restaurant.address,
+                    phone: restaurant.phone,
+                    email: restaurant.email,
+                    password: hashedPassword,
+                    salt,
+                    serviceAvailable,
+                    rating,
+                    food: {
+                        create: [
+                            {
+                                id: uuidv4(),
+                                name: i === 6 ? "Pizza Regina" : "Plat Signature",
+                                description: "Un plat maison incontournable",
+                                category: "Plat principal",
+                                foodType: restaurant.foodTypes[0],
+                                readyTime: i % 2 === 0 ? 25 : 35,
+                                price: 18.90,
+                                images: [],
+                            },
+                            {
+                                id: uuidv4(),
+                                name: i === 3 ? "Pizza Margherita" : "Burger Maison",
+                                description: "Délicieux et généreux",
+                                category: "Plat principal",
+                                foodType: restaurant.foodTypes[0],
+                                readyTime: i % 2 === 0 ? 30 : 40,
+                                price: 14.90,
+                                images: [],
+                            },
+                            {
+                                id: uuidv4(),
+                                name: "Dessert du chef",
+                                description: "Un dessert raffiné pour conclure",
+                                category: "Dessert",
+                                foodType: restaurant.foodTypes[0],
+                                readyTime: 10,
+                                price: 7.50,
+                                images: [],
+                            }
+                        ]
+                    }
+                }
+            })
+
+            console.log(`Restaurant ${restaurant.name} et ses plats ajoutés.`)
+        }
     }
-  }
 
-  main()
-  .catch(e => {
-    console.log(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  })
+    main()
+        .catch((e) => {
+            console.error(e)
+            process.exit(1)
+        })
+        .finally(async () => {
+            await prisma.$disconnect()
+        })
