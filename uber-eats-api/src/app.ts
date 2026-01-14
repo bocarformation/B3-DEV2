@@ -1,6 +1,6 @@
 import express from "express";
-import {AdminRoute, RestaurantRoute} from "./routes/index";
 import { jsonApiResponseMiddleware } from "./middlewares/index";
+import { ApiRoute } from "./routes/index";
 
 
 const app = express();
@@ -10,10 +10,10 @@ app.use(express.urlencoded({extended: true})); // x-www-form-urlencoded
 app.use(jsonApiResponseMiddleware);
 
 
-app.use("/admin", AdminRoute)
-app.use("/restaurant", RestaurantRoute)
+app.use("/api", ApiRoute); // http://localhost:8000/api/v1
 
 app.listen(8000, () => {
     console.log("Server is running at http://localhost:8000");
     
 })
+

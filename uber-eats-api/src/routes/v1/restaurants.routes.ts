@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { login,getProfile, updateProfile, updateServiceAvailability, updateCoverImages, addFood} from "../controllers/index";
-import { authenticationMiddleware } from "../middlewares/index";
+import { login,getProfile, updateProfile, updateServiceAvailability, updateCoverImages, addFood} from "../../controllers/v1/index";
+import { authenticationMiddleware } from "../../middlewares/index";
 
 
 

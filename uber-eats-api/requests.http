@@ -1,7 +1,7 @@
 @restaurantId=1fc152e7-b657-4ea6-b7e1-2a6f5282f756
 
 ### Register Restaurant
-POST http://localhost:8000/admin/restaurants
+POST http://localhost:8000/api/v1/admin/restaurants
 Content-Type: application/json
 
 {
@@ -16,13 +16,13 @@ Content-Type: application/json
 }
 
 ### Get Restaurants
-GET http://localhost:8000/admin/restaurants
+GET http://localhost:8000/api/v1/admin/restaurants
 
 ### Get Restaurant By ID
-GET http://localhost:8000/admin/restaurants/{{restaurantId}}
+GET http://localhost:8000/api/v1/admin/restaurants/{{restaurantId}}
 
 ### Login
-POST http://localhost:8000/restaurant/login
+POST http://localhost:8000/api/v1/restaurant/login
 Content-Type: application/json
 
 {
@@ -33,11 +33,11 @@ Content-Type: application/json
 
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmYzE1MmU3LWI2NTctNGVhNi1iN2UxLTJhNmY1MjgyZjc1NiIsIm5hbWUiOiJMZSBQZXRpdCBCaXN0cm8iLCJvd25lck5hbWUiOiJJc2FiZWxsZSBEdXBvbnQiLCJlbWFpbCI6ImxlcGV0aXRiaXN0cm9AZ21haWwuY29tIiwiZm9vZFR5cGVzIjpbIkZyZW5jaCIsIlNlYWZvb2QiXSwiaWF0IjoxNzY4MzIxMTY2LCJleHAiOjE3Njg0MDc1NjZ9.0QrLMJQkuqAoBeAfehx674u_AYCyt6FRE2yKSa2SkNI
 ### Get Profile
-GET http://localhost:8000/restaurant/profile
+GET http://localhost:8000/api/v1/restaurant/profile
 Authorization: Bearer {{token}}
 
 ### Update profile
-PATCH http://localhost:8000/restaurant/profile
+PATCH http://localhost:8000/api/v1/restaurant/profile
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -50,12 +50,12 @@ Content-Type: application/json
 }
 
 ### Update Service availability
-PATCH http://localhost:8000/restaurant/profile/service-available
+PATCH http://localhost:8000/api/v1/restaurant/profile/service-available
 Authorization: Bearer {{token}}
 
 
 ### Update Cover Images
-PATCH http://localhost:8000/restaurant/profile/cover-images
+PATCH http://localhost:8000/api/v1/restaurant/profile/cover-images
 Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=limite
 
@@ -74,7 +74,7 @@ Content-Type: image/jpeg
 
 
 ### Add Food
-POST http://localhost:8000/restaurant/foods
+POST http://localhost:8000/api/v1/restaurant/foods
 Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=limite
 

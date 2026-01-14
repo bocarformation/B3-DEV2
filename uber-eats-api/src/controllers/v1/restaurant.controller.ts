@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import type { LoginInputs,EditRestaurantInputs, CreateFoodInputs } from "../dto/index";
-import { prisma } from "../prisma/client";
-import { isValidPassword, generateSignature } from "../utility/index";
-import { sanitizeRestaurant } from "../utility/index";
-import { uploadImagesMiddleware } from "../middlewares/index";
+import type { LoginInputs,EditRestaurantInputs, CreateFoodInputs } from "../../dto/index.js";
+import { prisma } from "../../prisma/client.js";
+import { isValidPassword, generateSignature } from "../../utility/index.js";
+import { sanitizeRestaurant } from "../../utility/index.js";
+import { uploadImagesMiddleware } from "../../middlewares/index.js";
 
 
 export const login = async (

@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
-import type { CreateRestaurantInputs } from "../dto/index";
-import { prisma } from "../prisma/client";
-import { generateSalt, hashPassword } from "../utility/index";
-import { sanitizeRestaurant } from "../utility/index";
+import type { CreateRestaurantInputs } from "../../dto/index.js";
+import { prisma } from "../../prisma/client.js";
+import { generateSalt, hashPassword } from "../../utility/index.js";
+import { sanitizeRestaurant } from "../../utility/index.js";
 
 export const registerRestaurant = async (
     req: Request,
