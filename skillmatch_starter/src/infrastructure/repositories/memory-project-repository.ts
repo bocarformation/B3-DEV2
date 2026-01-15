@@ -1,14 +1,15 @@
 import { Project } from "../../domain/entities/Project";
+import { IProjectRepository } from "../../domain/interfaces/project-repository.interface";
 
-export class MemoryProjectRepository{
+export class MemoryProjectRepository implements IProjectRepository{
     projects: Project[] = [];
 
-    save(project: Project) {
+    async save(project: Project) {
         this.projects.push(project)
     }
 
-    findById(id: string){
-        return this.projects.find(p => p.props.id === id)
+   async findById(id: string){
+        return this.projects.find(p => p.props.id === id) ?? null
     }
 }
 

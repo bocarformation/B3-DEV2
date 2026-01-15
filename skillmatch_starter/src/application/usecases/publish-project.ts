@@ -1,7 +1,7 @@
 import { Project } from "../../domain/entities/Project";
+import { IProjectRepository } from "../../domain/interfaces/project-repository.interface";
 import { SkillSet } from "../../domain/skill/skill-set";
 import { Skill } from "../../domain/skill/value-objects/skill";
-import { MemoryProjectRepository } from "../../infrastructure/repositories/memory-project-repository";
 
 interface PublishProjectPayload{
     title: string,
@@ -12,7 +12,7 @@ interface PublishProjectPayload{
 
 export class PublishProjectUseCase {
 
-    constructor(private readonly projectRepository: MemoryProjectRepository){}
+    constructor(private readonly projectRepository: IProjectRepository){}
 
     async execute(payload: PublishProjectPayload ){
         const id: string = "1";

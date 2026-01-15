@@ -68,7 +68,7 @@ describe("publish project", () => {
         it("should be saved in the database", async () => {
             const id = await usecase.execute(payload);
 
-            const createdProject = repository.findById(id)
+            const createdProject = await repository.findById(id)
 
             expect(createdProject).toBeDefined();
             expect(createdProject!.props.title).toEqual(payload.title)
