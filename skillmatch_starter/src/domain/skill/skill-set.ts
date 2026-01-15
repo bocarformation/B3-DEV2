@@ -7,7 +7,6 @@ export class SkillSet {
         this.skills = this.removeDuplicates(skills)
     }
 
-
     private removeDuplicates(skills: Skill[]){
         // On va retirer les doublons
         const uniqueSkills: Skill[] = [];
@@ -20,7 +19,6 @@ export class SkillSet {
 
         return uniqueSkills;
     }
-
 
     hasAtLeast(n: number):boolean {
         return this.skills.length >= n
@@ -38,3 +36,14 @@ export class SkillSet {
     }
 
 }
+
+
+// const damienSkills = new SkillSet([
+//     new Skill("React", true),
+//     new Skill("TypeScript", true),
+//     new Skill("Tailwind", false)
+// ])
+
+// const thomasRequiredSkills = ["TypeScript", "React", "Node"];
+
+// const isEligible = damienSkills.hasRequiredSkills(thomasRequiredSkills, 0.6)// true
