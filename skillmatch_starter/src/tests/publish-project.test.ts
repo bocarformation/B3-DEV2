@@ -1,14 +1,17 @@
 import { PublishProjectUseCase } from "../application/usecases/publish-project";
 import { MemoryProjectRepository } from "../infrastructure/repositories/memory-project-repository";
+import { StaticIdGenerator } from "./utils/static-id-generator";
 
 describe("publish project", () => {
 
     let usecase: PublishProjectUseCase;
-    let repository: MemoryProjectRepository
+    let repository: MemoryProjectRepository;
+    let idGenerator: StaticIdGenerator;
 
     beforeEach(() => {
         repository = new MemoryProjectRepository();
-        usecase = new PublishProjectUseCase(repository);
+        idGenerator = new StaticIdGenerator();
+        usecase = new PublishProjectUseCase(repository,idGenerator);
     })
 
     describe("Scenario: no title", () => {

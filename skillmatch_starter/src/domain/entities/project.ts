@@ -14,4 +14,21 @@ export class Project {
         this.props = props
     }
 
+    hasEmptyTitle(){
+        return !this.props.title;
+    }
+
+    hasEmptyDescription(){
+        return !this.props.description;
+    }
+
+    validateOrThrow(){
+        if(this.hasEmptyTitle()){
+            throw new Error("Title is required");
+        }
+        if(this.hasEmptyDescription()){
+            throw new Error("Description is required")
+        }
+    }
+
 }
