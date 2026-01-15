@@ -1,0 +1,11 @@
+
+services:
+    mongo:
+        image: 'mongo:6'
+        environment:
+            MONGO_INITDB_DATABASE: skillmatch_test
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: qwerty
+            TZ: Europe/Paris
+        ports:
+            - '3702:27017'

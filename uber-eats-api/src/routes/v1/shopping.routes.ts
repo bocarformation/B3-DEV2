@@ -5,6 +5,7 @@ import { getFoodsIn30mins, getTopRestaurants, searchFoods,getAvailableFoods, get
 
 const router = Router();
 
+
 router.get("/available-foods/:postalcode", getAvailableFoods);
 router.get("/top-restaurants/:postalcode", getTopRestaurants);
 router.get("/foods-in-mins/:postalcode", getFoodsIn30mins);
