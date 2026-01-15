@@ -36,7 +36,37 @@ describe("publish project", () => {
         }
         it('should throw an error', async () => {
             const usecase = new PublishProjectUseCase();
-            await expect(() => usecase.execute(payload)).rejects.toThrow("At least two skills are required");
+            await expect(() => usecase.execute(payload)).rejects.toThrow("At least two different skills are required");
+        })
+    })
+
+    describe("Scneario: no duplicate skills", () => {
+        const payload = {
+            title: "Créer une API Node",
+            description: "Faire une API REST",
+            skills:["TypeScript","TypeScript"]
+        }
+
+        it("should throw an error",async () => {
+            const usecase = new PublishProjectUseCase();
+            await expect(() => usecase.execute(payload)).rejects.toThrow("At least two different skills are required")
+        })
+    })
+
+
+    describe("Scenario: Payload is valid", () => {
+        const payload = {
+            title: "Créer une API",
+            description: "Faire une API",
+            skills: ["TypeScript", "NodeJS","Express", "MongoDB", "Docker"]
+        }
+
+        it("should be saved in the database", async () => {
+
+        })
+
+        it("should return the ID of the project", async () => {
+            
         })
     })
 

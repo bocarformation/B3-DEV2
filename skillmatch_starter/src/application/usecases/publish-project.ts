@@ -1,4 +1,5 @@
-import { Skill } from "../../domain/value-objects/skill";
+import { SkillSet } from "../../domain/skill/skill-set";
+import { Skill } from "../../domain/skill/value-objects/skill";
 
 interface PublishProjectPayload{
     title: string,
@@ -17,8 +18,10 @@ export class PublishProjectUseCase {
             throw new Error("Description is required");
         }
         const skills = payload.skills.map(s => new Skill(s,true));
-        if(skills.length < 2) {
-            throw new Error("At least two skills are required");
+        const skillSet = new SkillSet(skills)
+
+        if(!skillSet.hasAtLeast(2)){
+            throw new Error("At least two different skills are required")
         }
     }
 }
