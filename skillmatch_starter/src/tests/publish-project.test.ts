@@ -1,7 +1,15 @@
 import { PublishProjectUseCase } from "../application/usecases/publish-project";
+import { MemoryProjectRepository } from "../infrastructure/repositories/memory-project-repository";
 
 describe("publish project", () => {
 
+    let usecase: PublishProjectUseCase;
+    let repository: MemoryProjectRepository
+
+    beforeEach(() => {
+        repository = new MemoryProjectRepository();
+        usecase = new PublishProjectUseCase(repository);
+    })
 
     describe("Scenario: no title", () => {
         const payload = {
@@ -10,7 +18,6 @@ describe("publish project", () => {
             skills: ["TypeScript", "NodeJS", "Express", "MongoDB", "Docker"]
         }
         it("should throw an error", async () => {
-            const usecase = new PublishProjectUseCase();
             await expect(() => usecase.execute(payload)).rejects.toThrow("Title is required");
         })
     });
@@ -23,7 +30,6 @@ describe("publish project", () => {
         }
 
         it("should throw an error", async () => {
-            const usecase = new PublishProjectUseCase();
             await expect(() => usecase.execute(payload)).rejects.toThrow("Description is required");
         })
     })
@@ -35,7 +41,6 @@ describe("publish project", () => {
             skills: ["TypeScript"]
         }
         it('should throw an error', async () => {
-            const usecase = new PublishProjectUseCase();
             await expect(() => usecase.execute(payload)).rejects.toThrow("At least two different skills are required");
         })
     })
@@ -48,7 +53,6 @@ describe("publish project", () => {
         }
 
         it("should throw an error",async () => {
-            const usecase = new PublishProjectUseCase();
             await expect(() => usecase.execute(payload)).rejects.toThrow("At least two different skills are required")
         })
     })
@@ -62,11 +66,19 @@ describe("publish project", () => {
         }
 
         it("should be saved in the database", async () => {
+            const id = await usecase.execute(payload);
+
+            const createdProject = repository.findById(id)
+
+            expect(createdProject).toBeDefined();
+            expect(createdProject!.props.title).toEqual(payload.title)
+            expect(createdProject!.props.description).toEqual(payload.description);
 
         })
 
         it("should return the ID of the project", async () => {
-            
+            const id = await usecase.execute(payload);
+            expect(id).toEqual("1");
         })
     })
 

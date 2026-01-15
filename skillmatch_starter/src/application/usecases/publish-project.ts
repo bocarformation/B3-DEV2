@@ -1,5 +1,7 @@
+import { Project } from "../../domain/entities/Project";
 import { SkillSet } from "../../domain/skill/skill-set";
 import { Skill } from "../../domain/skill/value-objects/skill";
+import { MemoryProjectRepository } from "../../infrastructure/repositories/memory-project-repository";
 
 interface PublishProjectPayload{
     title: string,
@@ -9,7 +11,13 @@ interface PublishProjectPayload{
 
 
 export class PublishProjectUseCase {
+
+    constructor(private readonly projectRepository: MemoryProjectRepository){}
+
     async execute(payload: PublishProjectPayload ){
+        const id: string = "1";
+        
+
         if(!payload.title){
             throw new Error("Title is required");
         }
@@ -23,5 +31,16 @@ export class PublishProjectUseCase {
         if(!skillSet.hasAtLeast(2)){
             throw new Error("At least two different skills are required")
         }
+
+            const project = new Project({
+            id,
+            title: payload.title,
+            description: payload.description,
+            skills
+        });
+
+        this.projectRepository.save(project)
+
+        return id
     }
 }
